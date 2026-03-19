@@ -1,0 +1,73 @@
+# 🔹 Python
+
+**pycache**/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+
+# 🔹 Virtual Environment
+
+venv/
+.env/
+.env
+
+# 🔹 Environment Variables
+
+.env.local
+.env.*.local
+
+# 🔹 Streamlit
+
+.streamlit/secrets.toml
+
+# 🔹 Chroma DB (vector store)
+
+chroma_db/
+*.chroma/
+
+# 🔹 Cloned repositories
+
+repo/
+
+# 🔹 Whisper / Model caches
+
+*.pt
+*.bin
+*.model
+
+# 🔹 HuggingFace cache (optional but recommended)
+
+.cache/
+huggingface/
+hf_home/
+
+# 🔹 OS files
+
+.DS_Store
+Thumbs.db
+
+# 🔹 Logs
+
+*.log
+
+# 🔹 Temporary files
+
+temp/
+tmp/
+*.tmp
+
+# 🔹 VS Code / IDE
+
+.vscode/
+.idea/
+
+# 🔹 Jupyter
+
+.ipynb_checkpoints/
+
+# 🔹 Build / dist
+
+build/
+dist/
+*.egg-info/

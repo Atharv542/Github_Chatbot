@@ -1,0 +1,13 @@
+langchain
+langchain-community
+langchain-groq
+sentence-transformers
+chromadb
+streamlit
+gitpython
+tiktoken
+python-dotenv
+langchain-text-splitter
+langchain-huggingface
+streamlit-mic-recorder
+openai-whisper

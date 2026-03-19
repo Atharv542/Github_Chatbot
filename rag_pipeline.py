@@ -19,7 +19,7 @@ load_dotenv()
 groq_api_key = st.secrets.get("GROQ_API_KEY")
 
 repo_path = "/tmp/repo"
-
+chroma_path = "/tmp/chroma_db"
 
 # Clone GitHub repository
 def clone_repo(repo_url):

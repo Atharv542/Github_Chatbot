@@ -102,7 +102,7 @@ def create_vector_store(docs):
     vector_db = Chroma.from_documents(
         documents=split_docs,
         embedding=embeddings,
-        persist_directory = "/tmp/chroma_db"
+        
     )
 
     return vector_db

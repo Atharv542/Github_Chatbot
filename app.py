@@ -18,32 +18,32 @@ from rag_pipeline import (
 st.set_page_config(page_title="GitHub RAG Assistant")
 
 
-st.markdown("""
-<style>
+# st.markdown("""
+# <style>
 
-.mic-container{
-    position: fixed;
-    bottom: 18px;
-    right: 20px;
-    z-index: 100;
-}
+# .mic-container{
+#     position: fixed;
+#     bottom: 18px;
+#     right: 20px;
+#     z-index: 100;
+# }
 
-.mic-container button{
-    background-color:#2b2b2b;
-    border:none;
-    border-radius:50%;
-    width:40px;
-    height:40px;
-    font-size:18px;
-    cursor:pointer;
-}
+# .mic-container button{
+#     background-color:#2b2b2b;
+#     border:none;
+#     border-radius:50%;
+#     width:40px;
+#     height:40px;
+#     font-size:18px;
+#     cursor:pointer;
+# }
 
-.mic-container button:hover{
-    background-color:#444;
-}
+# .mic-container button:hover{
+#     background-color:#444;
+# }
 
-</style>
-""", unsafe_allow_html=True)
+# </style>
+# """, unsafe_allow_html=True)
 
 
 st.sidebar.title("Repository Settings")

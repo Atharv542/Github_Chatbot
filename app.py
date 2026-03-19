@@ -13,7 +13,7 @@ from rag_pipeline import (
 )
 
 
-model = whisper.load_model("base")
+# model = whisper.load_model("base")
 
 st.set_page_config(page_title="GitHub RAG Assistant")
 
@@ -102,38 +102,38 @@ for msg in st.session_state.messages:
     st.chat_message(msg["role"]).write(msg["content"])
 
 
-st.markdown('<div class="mic-container">', unsafe_allow_html=True)
+# st.markdown('<div class="mic-container">', unsafe_allow_html=True)
 
-audio = mic_recorder(
-    start_prompt="🎤",
-    stop_prompt="⏹",
-    key="recorder",
-    just_once=True
-)
+# audio = mic_recorder(
+#     start_prompt="🎤",
+#     stop_prompt="⏹",
+#     key="recorder",
+#     just_once=True
+# )
 
-st.markdown('</div>', unsafe_allow_html=True)
+# st.markdown('</div>', unsafe_allow_html=True)
 
 
-voice_query = None
+# voice_query = None
 
-if audio:
+# if audio:
 
-    with st.spinner("Transcribing audio..."):
+#     with st.spinner("Transcribing audio..."):
 
-        with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as f:
-            f.write(audio["bytes"])
-            audio_path = f.name
+#         with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as f:
+#             f.write(audio["bytes"])
+#             audio_path = f.name
 
-        result = model.transcribe(audio_path)
+#         result = model.transcribe(audio_path)
 
-        voice_query = result["text"]
+#         voice_query = result["text"]
 
-    st.success(f"Recognized: {voice_query}")
+#     st.success(f"Recognized: {voice_query}")
 
 
 query = st.chat_input("Ask anything about the repository...")
-if voice_query:
-    query = voice_query
+# if voice_query:
+#     query = voice_query
 
 if query:
 

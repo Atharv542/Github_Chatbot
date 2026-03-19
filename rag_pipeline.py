@@ -19,15 +19,15 @@ load_dotenv()
 groq_api_key = st.secrets.get("GROQ_API_KEY")
 
 repo_path = "/tmp/repo"
-chroma_path = "/tmp/chroma_db"
+# chroma_path = "/tmp/chroma_db"
 
 # Clone GitHub repository
 def clone_repo(repo_url):
     if os.path.exists(repo_path):
         shutil.rmtree(repo_path)  # delete old repo
     
-    if os.path.exists(chroma_path):
-        shutil.rmtree(chroma_path)
+    # if os.path.exists(chroma_path):
+    #     shutil.rmtree(chroma_path)
 
     git.Repo.clone_from(repo_url, repo_path)
     return repo_path

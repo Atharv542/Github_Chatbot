@@ -133,11 +133,6 @@ If the question is about the repository, use the repository context.
 If the question is about previous messages (like "summarize what I asked"),
 use the chat history.
 
-- ONLY use the provided repository context
-- DO NOT use previous chat history for answering repository questions
-- If answer is not found in context, say:
-  "I couldn't find this in the repository."
-
 <context>
 {context}
 </context>

@@ -1,5 +1,9 @@
 import streamlit as st
 import time
+import whisper
+import tempfile
+
+from streamlit_mic_recorder import mic_recorder
 
 from rag_pipeline import (
     clone_repo,
@@ -8,17 +12,54 @@ from rag_pipeline import (
     create_rag_chain
 )
 
+
+# model = whisper.load_model("base")
+
 st.set_page_config(page_title="GitHub RAG Assistant")
 
-# ================================
-# SESSION STATE INIT
-# ================================
+
+# st.markdown("""
+# <style>
+
+# .mic-container{
+#     position: fixed;
+#     bottom: 18px;
+#     right: 20px;
+#     z-index: 100;
+# }
+
+# .mic-container button{
+#     background-color:#2b2b2b;
+#     border:none;
+#     border-radius:50%;
+#     width:40px;
+#     height:40px;
+#     font-size:18px;
+#     cursor:pointer;
+# }
+
+# .mic-container button:hover{
+#     background-color:#444;
+# }
+
+# </style>
+# """, unsafe_allow_html=True)
+
+
+st.sidebar.title("Repository Settings")
+
+repo_url = st.sidebar.text_input("Enter GitHub Repository URL")
+
+process_btn = st.sidebar.button("Process Repository")
+
+st.title("GitHub Repository Chat Assistant")
+
 
 if "messages" not in st.session_state:
     st.session_state.messages = [
         {
             "role": "assistant",
-            "content": "Hello 👋 Ask me anything about a GitHub repository."
+            "content": "Hello 👋 Ask me anything about the GitHub repository."
         }
     ]
 
@@ -28,24 +69,6 @@ if "rag_chain" not in st.session_state:
 if "retriever" not in st.session_state:
     st.session_state.retriever = None
 
-if "current_repo" not in st.session_state:
-    st.session_state.current_repo = None
-
-
-# ================================
-# SIDEBAR
-# ================================
-
-st.sidebar.title("Repository Settings")
-
-repo_url = st.sidebar.text_input("Enter GitHub Repository URL")
-
-process_btn = st.sidebar.button("Process Repository")
-
-
-# ================================
-# PROCESS REPO
-# ================================
 
 if process_btn:
 
@@ -53,18 +76,6 @@ if process_btn:
         st.sidebar.warning("Please enter a GitHub repository URL")
 
     else:
-
-        # 🔥 FULL RESET (IMPORTANT FIX)
-        st.session_state.messages = [
-            {
-                "role": "assistant",
-                "content": f"Now chatting with:\n{repo_url}"
-            }
-        ]
-
-        st.session_state.rag_chain = None
-        st.session_state.retriever = None
-        st.session_state.current_repo = repo_url
 
         with st.spinner("Cloning repository..."):
             path = clone_repo(repo_url)
@@ -85,29 +96,44 @@ if process_btn:
         st.sidebar.success("Repository indexed successfully!")
 
 
-# ================================
-# UI
-# ================================
-
-st.title("GitHub Repository Chat Assistant")
-
-if st.session_state.current_repo:
-    st.caption(f"📂 Current Repo: {st.session_state.current_repo}")
-
-
-# ================================
-# CHAT HISTORY
-# ================================
+#Chat History
 
 for msg in st.session_state.messages:
     st.chat_message(msg["role"]).write(msg["content"])
 
 
-# ================================
-# USER INPUT
-# ================================
+# st.markdown('<div class="mic-container">', unsafe_allow_html=True)
+
+# audio = mic_recorder(
+#     start_prompt="🎤",
+#     stop_prompt="⏹",
+#     key="recorder",
+#     just_once=True
+# )
+
+# st.markdown('</div>', unsafe_allow_html=True)
+
+
+# voice_query = None
+
+# if audio:
+
+#     with st.spinner("Transcribing audio..."):
+
+#         with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as f:
+#             f.write(audio["bytes"])
+#             audio_path = f.name
+
+#         result = model.transcribe(audio_path)
+
+#         voice_query = result["text"]
+
+#     st.success(f"Recognized: {voice_query}")
+
 
 query = st.chat_input("Ask anything about the repository...")
+# if voice_query:
+#     query = voice_query
 
 if query:
 
@@ -126,7 +152,8 @@ if query:
         start = time.process_time()
 
         response = st.session_state.rag_chain.invoke({
-            "question": query
+            "question": query,
+            "chat_history": st.session_state.messages
         })
 
         response_time = time.process_time() - start
@@ -137,16 +164,12 @@ if query:
 
     st.chat_message("assistant").write(response)
 
-    st.caption(f"⏱ Response time: {response_time:.2f} seconds")
+    st.caption(f"Response time: {response_time:.2f} seconds")
 
-    # ================================
-    # RETRIEVED CHUNKS
-    # ================================
-
-    with st.expander("📄 Retrieved Code Chunks"):
+    with st.expander("Retrieved Code Chunks"):
 
         docs = st.session_state.retriever.invoke(query)
 
         for doc in docs:
-            st.write(f"📂 File: {doc.metadata.get('source','unknown')}")
+            st.write(f"📄 File: {doc.metadata.get('source','unknown')}")
             st.code(doc.page_content)

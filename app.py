@@ -77,6 +77,14 @@ if process_btn:
 
     else:
 
+        # 🔥 RESET CHAT WHEN NEW REPO IS LOADED
+        st.session_state.messages = [
+            {
+                "role": "assistant",
+                "content": "Hello 👋 Ask me anything about the new GitHub repository."
+            }
+        ]
+
         with st.spinner("Cloning repository..."):
             path = clone_repo(repo_url)
 

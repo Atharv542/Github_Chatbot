@@ -1,9 +1,7 @@
 import streamlit as st
 import time
-import whisper
-import tempfile
 
-from streamlit_mic_recorder import mic_recorder
+
 
 from rag_pipeline import (
     clone_repo,

@@ -16,8 +16,8 @@ from langchain_core.output_parsers import StrOutputParser
 
 load_dotenv()
 
-groq_api_key = st.secrets.get("GROQ_API_KEY")
-
+# groq_api_key = st.secrets.get("GROQ_API_KEY")
+groq_api_key = os.getenv("GROQ_API_KEY")
 repo_path = "/tmp/repo"
 # chroma_path = "/tmp/chroma_db"
 
@@ -136,7 +136,9 @@ If the question is about the repository, use the repository context.
 
 If the question is about previous messages (like "summarize what I asked"),
 use the chat history.
-
+STRICT RULE:
+- Do NOT call any tools
+- Only respond with plain text
 <context>
 {context}
 </context>

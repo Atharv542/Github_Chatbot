@@ -1,6 +1,7 @@
 import streamlit as st
 import time
-
+import whisper
+import tempfile
 
 
 from rag_pipeline import (

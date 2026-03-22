@@ -1,18 +1,13 @@
 streamlit
-gitpython
-python-dotenv
-
 langchain
 langchain-community
 langchain-core
+langchain-text-splitters
 langchain-huggingface
 langchain-groq
-
 chromadb
 sentence-transformers
-
---extra-index-url https://download.pytorch.org/whl/cpu
-
-torch==2.2.2
-torchvision==0.17.2
-torchaudio==2.2.2
+gitpython
+python-dotenv
+streamlit-mic-recorder
+openai-whisper

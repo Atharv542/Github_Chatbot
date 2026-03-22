@@ -1,7 +1,6 @@
 import os
 import git
 import shutil
-import uuid
 from dotenv import load_dotenv
 import streamlit as st
 from langchain_community.document_loaders import TextLoader
@@ -24,9 +23,14 @@ repo_path = "/tmp/repo"
 
 # Clone GitHub repository
 def clone_repo(repo_url):
-    unique_path = f"/tmp/repo_{uuid.uuid4().hex}"
-    git.Repo.clone_from(repo_url, unique_path)
-    return unique_path
+    if os.path.exists(repo_path):
+        shutil.rmtree(repo_path)  # delete old repo
+    
+    # if os.path.exists(chroma_path):
+    #     shutil.rmtree(chroma_path)
+
+    git.Repo.clone_from(repo_url, repo_path)
+    return repo_path
 
 
 # Load repository files

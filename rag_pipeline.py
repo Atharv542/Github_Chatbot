@@ -6,7 +6,7 @@ import streamlit as st
 from langchain_community.document_loaders import TextLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_huggingface import HuggingFaceEmbeddings
-from langchain_community.vectorstores import Chroma
+from langchain_community.vectorstores import FAISS
 
 from langchain_groq import ChatGroq
 
@@ -87,22 +87,19 @@ def load_files(repo_path):
 
 # Create vector database
 def create_vector_store(docs):
-
     splitter = RecursiveCharacterTextSplitter(
         chunk_size=800,
         chunk_overlap=100
     )
-
     split_docs = splitter.split_documents(docs)
 
     embeddings = HuggingFaceEmbeddings(
         model_name="sentence-transformers/all-MiniLM-L6-v2"
     )
 
-    vector_db = Chroma.from_documents(
+    vector_db = FAISS.from_documents(
         documents=split_docs,
         embedding=embeddings,
-        
     )
 
     return vector_db

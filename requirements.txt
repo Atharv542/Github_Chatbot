@@ -5,9 +5,7 @@ langchain-core
 langchain-text-splitters
 langchain-huggingface
 langchain-groq
-chromadb
+faiss-cpu
 sentence-transformers
 gitpython
 python-dotenv
-streamlit-mic-recorder
-openai-whisper
